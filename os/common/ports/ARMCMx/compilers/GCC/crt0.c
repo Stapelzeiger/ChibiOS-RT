@@ -252,6 +252,8 @@ void _default_exit(void) {
     ;
 }
 
+void check_bootloader(void);
+
 /**
  * @brief   Reset vector.
  */
@@ -259,6 +261,7 @@ void _default_exit(void) {
 __attribute__((naked))
 #endif
 void Reset_Handler(void) {
+  check_bootloader();
   uint32_t psp, reg;
 
   /* Process Stack initialization, it is allocated starting from the
