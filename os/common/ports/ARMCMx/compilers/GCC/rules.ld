@@ -92,6 +92,13 @@ SECTIONS
     _etext = .;
     _textdata = _etext;
 
+    .noinit :
+    {
+        . = ALIGN(4);
+        *(.noinit .noinit.*)
+        . = ALIGN(4);
+    } > ram
+
     .stacks :
     {
         . = ALIGN(8);
