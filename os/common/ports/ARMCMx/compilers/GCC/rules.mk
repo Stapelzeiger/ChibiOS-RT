@@ -149,6 +149,9 @@ CPPFLAGS += -MD -MP -MF .dep/$(@F).d
 # Paths where to search for sources
 VPATH     = $(SRCPATHS)
 
+COLOR       = \033[1;31m
+COLOR_CLEAR = \033[0m
+
 #
 # Makefile rules
 #
@@ -173,7 +176,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(CPPC) -c $(CPPFLAGS) $(AOPT) -I. $(IINCDIR) $< -o $@
 else
-	@echo Compiling $(<F)
+	@echo "$(COLOR) Compiling $(<) $(COLOR_CLEAR)"
 	@$(CPPC) -c $(CPPFLAGS) $(AOPT) -I. $(IINCDIR) $< -o $@
 endif
 
@@ -182,7 +185,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(CPPC) -c $(CPPFLAGS) $(TOPT) -I. $(IINCDIR) $< -o $@
 else
-	@echo Compiling $(<F)
+	@echo "$(COLOR) Compiling $(<) $(COLOR_CLEAR)"
 	@$(CPPC) -c $(CPPFLAGS) $(TOPT) -I. $(IINCDIR) $< -o $@
 endif
 
@@ -191,7 +194,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(CC) -c $(CFLAGS) $(AOPT) -I. $(IINCDIR) $< -o $@
 else
-	@echo Compiling $(<F)
+	@echo "$(COLOR) Compiling $(<) $(COLOR_CLEAR)"
 	@$(CC) -c $(CFLAGS) $(AOPT) -I. $(IINCDIR) $< -o $@
 endif
 
@@ -200,7 +203,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(CC) -c $(CFLAGS) $(TOPT) -I. $(IINCDIR) $< -o $@
 else
-	@echo Compiling $(<F)
+	@echo "$(COLOR) Compiling $(<) $(COLOR_CLEAR)"
 	@$(CC) -c $(CFLAGS) $(TOPT) -I. $(IINCDIR) $< -o $@
 endif
 
@@ -209,7 +212,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(AS) -c $(ASFLAGS) -I. $(IINCDIR) $< -o $@
 else
-	@echo Compiling $(<F)
+	@echo "$(COLOR) Compiling $(<) $(COLOR_CLEAR)"
 	@$(AS) -c $(ASFLAGS) -I. $(IINCDIR) $< -o $@
 endif
 
@@ -218,7 +221,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(CC) -c $(ASXFLAGS) $(TOPT) -I. $(IINCDIR) $< -o $@
 else
-	@echo Compiling $(<F)
+	@echo "$(COLOR) Compiling $(<) $(COLOR_CLEAR)"
 	@$(CC) -c $(ASXFLAGS) $(TOPT) -I. $(IINCDIR) $< -o $@
 endif
 
@@ -227,7 +230,7 @@ ifeq ($(USE_VERBOSE_COMPILE),yes)
 	@echo
 	$(LD) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
 else
-	@echo Linking $@
+	@echo "$(COLOR) Linking $@ $(COLOR_CLEAR)"
 	@$(LD) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
 endif
 
@@ -235,7 +238,7 @@ endif
 ifeq ($(USE_VERBOSE_COMPILE),yes)
 	$(HEX) $< $@
 else
-	@echo Creating $@
+	@echo "$(COLOR) Creating $@ $(COLOR_CLEAR)"
 	@$(HEX) $< $@
 endif
 
@@ -243,7 +246,7 @@ endif
 ifeq ($(USE_VERBOSE_COMPILE),yes)
 	$(BIN) $< $@
 else
-	@echo Creating $@
+	@echo "$(COLOR) Creating $@ $(COLOR_CLEAR)"
 	@$(BIN) $< $@
 endif
 
@@ -251,7 +254,7 @@ endif
 ifeq ($(USE_VERBOSE_COMPILE),yes)
 	$(SREC) $< $@
 else
-	@echo Creating $@
+	@echo "$(COLOR) Creating $@ $(COLOR_CLEAR)"
 	@$(SREC) $< $@
 endif
 
@@ -259,12 +262,12 @@ endif
 ifeq ($(USE_VERBOSE_COMPILE),yes)
 	$(OD) $(ODFLAGS) $< > $@
 else
-	@echo Creating $@
+	@echo "$(COLOR) Creating $@ $(COLOR_CLEAR)"
 	@$(OD) $(ODFLAGS) $< > $@
 	@echo
 	@$(SZ) $<
 	@echo
-	@echo Done
+	@echo "$(COLOR) Done $(COLOR_CLEAR)"
 endif
 
 lib: $(OBJS) $(BUILDDIR)/lib$(PROJECT).a
@@ -272,13 +275,13 @@ lib: $(OBJS) $(BUILDDIR)/lib$(PROJECT).a
 $(BUILDDIR)/lib$(PROJECT).a: $(OBJS)
 	@$(AR) -r $@ $^
 	@echo
-	@echo Done
+	@echo "$(COLOR) Done $(COLOR_CLEAR)"
 
 clean:
 	@echo Cleaning
 	-rm -fR .dep $(BUILDDIR)
 	@echo
-	@echo Done
+	@echo "$(COLOR) Done $(COLOR_CLEAR)"
 
 #
 # Include the dependency files, should be the last of the makefile
