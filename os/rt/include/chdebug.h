@@ -195,7 +195,7 @@ typedef struct {
 #if !defined(chDbgAssert)
 #define chDbgAssert(c, r) do {                                              \
   if (CH_DBG_ENABLE_ASSERTS && !(c))                                        \
-    chSysHalt(__func__);                                                    \
+    chSysHalt(r);                                                    \
 } while (0)
 #endif /* !defined(chDbgAssert) */
 /** @} */
